@@ -14,13 +14,11 @@ class Board():
 
 
     def updateMoves(self):
-        moves = [[None]*8 for i in range(8)]
         for i in range(8):
              for j in range(8):
                   if self.board[i][j] is not None:
-                       moves[i][j] = self.board[i][j].generateMoves()
+                       self.board[i][j].generateMoves()
                        
-        return moves
 
     def getDefaultBoard(self):
         
