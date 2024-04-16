@@ -111,7 +111,6 @@ class Board():
                  j+=iterate
         return moves_on_side
 
-
     def getLeaps(self, position: tuple, team_check: int):
         
         i,j = position[0], position[1]
@@ -186,7 +185,31 @@ class Board():
     def returnPosition(self, position: tuple):
          return self.board[position[0]][position[1]]
 
-    #useless
+    def validSide(self, piece, pos2):
+        pos1 = piece.position
+        return pos1[0]==pos2[0] or pos1[1] == pos2[1]
+    
+    def validDiagonal(self, piece, pos2):
+        pos1 = piece.position 
+        return abs(pos1[0]-pos2[0]) == abs(pos1[1]-pos2[1])
+
+    def validLeap(self, piece, pos2):
+        pos1 = piece.position 
+        a = abs(pos1[0]-pos2[0])
+        b = abs(pos1[1]-pos2[1])
+        return (a == 2 and b == 1) or (a == 1 and b == 2)
+
+    def validPush(self, piece, pos2):
+        pos1 = piece.position 
+        if (pos1[0] == 7 and piece.team == 0) or (pos1[0] == 1 and piece.team == 1):
+            return abs(pos1[0]-pos2[0])<3
+        return abs(pos1[0]-pos2[0])<2
+
+    def validKing(self, pos1, pos2):
+        a = abs(pos1[0]-pos2[0])
+        b = abs(pos1[1]-pos2[1])
+        return (a<2 and b<2)
+
     def checkCheck(self):
         for line in self.board:
              for piece in line:
