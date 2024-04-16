@@ -73,8 +73,6 @@ class Board():
                         
                         elif self.board[temp1][temp2].team != team_check:
                             moves_on_diagonal.append((temp1,temp2))
-                            if self.board[temp1][temp2].id == 1:
-                                 self.checks.append((temp1,temp2))
                             break
                         else:
                             break
@@ -96,8 +94,6 @@ class Board():
                       moves_on_side.append((i+iterate,j))
                  elif self.board[i+iterate][j].team != team_check:
                       moves_on_side.append((i+iterate,j))
-                      if self.board[i+iterate][j].id == 1:
-                            self.checks.append((i+iterate,j))
                       break
                  else:
                       break
@@ -109,8 +105,6 @@ class Board():
                       moves_on_side.append((i,j+iterate))
                  elif self.board[i][j+iterate].team != team_check:
                       moves_on_side.append((i,j+iterate))
-                      if self.board[i][j+iterate].id == 1:
-                           self.checks.append((i,j+iterate))
                       break
                  else:
                       break
@@ -135,8 +129,7 @@ class Board():
                         
                         elif self.board[temp1][temp2].team != team_check:
                             moves_on_leap.append((temp1,temp2))
-                            if self.board[temp1][temp2].id == 1:
-                                 self.checks.append((temp1,temp2))
+                            
                     
                     temp1,temp2 = i+iterate_2,j+iterate_1
                     if self.isValid((temp1,temp2)):
@@ -145,8 +138,7 @@ class Board():
                         
                         elif self.board[temp1][temp2].team != team_check:
                             moves_on_leap.append((temp1,temp2))
-                            if self.board[temp1][temp2].id == 1:
-                                 self.checks.append((temp1,temp2))
+                            
         return moves_on_leap         
 
     def getPush(self, position: tuple, team_check: int):
@@ -170,14 +162,10 @@ class Board():
         if self.isValid((i+mover,j+1)):
                 if self.board[i+mover][j+1] is not None and self.board[i+mover][j+1].team != team_check:
                     moves_on_push.append((i+mover,j+1))
-                    if self.board[i+mover][j+1].id == 1:
-                                 self.checks.append((i+mover,j+1))
 
         if self.isValid((i+mover,j-1)):
                 if self.board[i+mover][j-1] is not None and self.board[i+mover][j-1].team != team_check:
                     moves_on_push.append((i+mover,j-1))
-                    if self.board[i+mover][j-1].id == 1:
-                         self.checks.append((i+mover,j-1))
 
         return moves_on_push
     
