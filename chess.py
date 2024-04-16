@@ -231,8 +231,8 @@ class Queen():
         self.team = team
         self.possibleMoves = {}
     def generateMoves(self):
-        self.possibleMoves = {}
-        for move in self.gameEnviroment.getDiagonals(self.position, self.team)+ self.gameEnviroment.getSides(self.position, self.team):
+        self.possibleMoves.clear()
+        for move in self.gameEnviroment.getDiagonals(self.position, self.team) + self.gameEnviroment.getSides(self.position, self.team):
              self.possibleMoves[move] = 1
     
 class Rook():
@@ -245,7 +245,7 @@ class Rook():
         self.possibleMoves = {}
 
     def generateMoves(self):
-        self.possibleMoves = {}
+        self.possibleMoves.clear()
         for move in self.gameEnviroment.getSides(self.position, self.team):
              self.possibleMoves[move] = 1
 
@@ -259,6 +259,7 @@ class Knight():
         self.possibleMoves = {}
 
     def generateMoves(self):
+        self.possibleMoves.clear()
         for move in self.gameEnviroment.getLeaps(self.position, self.team):
              self.possibleMoves[move] = 1
         
@@ -273,7 +274,7 @@ class Pawn():
         self.possibleMoves = {}
 
     def generateMoves(self):
-        self.possibleMoves = {}
+        self.possibleMoves.clear()
         for move in self.gameEnviroment.getPush(self.position, self.team):
              self.possibleMoves[move] = 1
     
@@ -287,7 +288,7 @@ class King():
         self.possibleMoves = {}
 
     def generateMoves(self):
-        self.possibleMoves = {}
+        self.possibleMoves.clear()
         for move in self.gameEnviroment.getKing(self.position, self.team):
              self.possibleMoves[move] = 1
 
@@ -301,6 +302,6 @@ class Bishop():
         self.possibleMoves = {}
 
     def generateMoves(self):
-        self.possibleMoves = {}
+        self.possibleMoves.clear()
         for move in self.gameEnviroment.getDiagonals(self.position, self.team):
              self.possibleMoves[move] = 1
