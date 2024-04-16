@@ -71,17 +71,13 @@ async def main():
                     imagem = images[piece.team][piece.id-1]
                     posicao = (const*piece.position[1], const*piece.position[0])
                     screen.blit(imagem,posicao)
-        
+                    
         if display is not None:
-             for move in display.possibleMoves.keys():
-                  pg.draw.circle(screen, (50, 50, 50), (const*move[1]+const//2, const*move[0]+const//2), const/6)
-
-        if drag is not None:
-            pos = drag.position
-            i,j = pos[1],pos[0]
-            imagem = images[drag.team][drag.id-1]
-            pg.draw.rect(screen, colors[(i+j)%2], pg.Rect(const*i, const*j, const, const))
-            screen.blit(imagem,(mousePos[0]-const//3,mousePos[1]-const//3))
+             if display.id == 6:
+                for i in range(8):
+                    for j in range(8):
+                         if game.validPush(display,(i,j)):
+                                pg.draw.circle(screen, (50, 50, 50), (const*j+const//2, const*i+const//2), const/6)
         
         frames+=1
         frames = frames%3600
