@@ -1,10 +1,10 @@
 # SimpleChess
 
-Very inefficient chess bot ported to webassembly via pygbag
+Very inefficient chess game (will be a bot soon) ported to webassembly via pygbag
 
 Heavily inspired by [Sebastian Lague's video of coding adverntures!](https://www.youtube.com/watch?v=U4ogK0MIzqk)
 
-You can play it online at [my personal website](https://www.cin.ufpe.br/~wsn/) (altough i dont garantee itll be up to date lol)
+You can play it online at [my personal website](https://www.cin.ufpe.br/~wsn/) (altough i dont garantee it'll be up to date lol)
 
 # Usage steps:
 
