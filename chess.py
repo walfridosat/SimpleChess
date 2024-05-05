@@ -1,6 +1,9 @@
 class Board():
 
     def __init__(self) -> None:
+
+        # default settings
+
         self.board = [[None]*8 for i in range(8)]
         self.ids = {
              1 : "king",
@@ -11,7 +14,7 @@ class Board():
              6 : "pawn"
         }
         self.player = 0
-
+        self.enpassant = [[False]*8,[False]*8]
 
     def updateMoves(self):
         for i in range(8):
@@ -149,10 +152,21 @@ class Board():
         if i==1 and team_check==1 and self.board[i+1][j] is None and self.board[i+2][j] is None:
              moves_on_push.append((i+2,j))
 
-        if team_check:
-            mover = 1
-        else:
-            mover = -1
+        mover = 1 if team_check else -1
+
+        # very bad ifs
+        if self.isValid((i,j-1)):
+            if self.board[i][j-1]:
+                if self.board[i][j-1].id == 6:
+                    if self.board[i][j-1].enpassant:
+                        moves_on_push.append((i+mover,j-1))
+        
+        if self.isValid((i,j+1)):
+            if self.board[i][j+1]:
+                if self.board[i][j+1].id == 6:
+                    if self.board[i][j+1].enpassant:
+                        moves_on_push.append((i+mover,j+1))
+                  
 
         if self.isValid((i+mover,j)):
                 if self.board[i+mover][j] is None:
@@ -200,7 +214,7 @@ class Board():
         return (a == 2 and b == 1) or (a == 1 and b == 2)
 
     def validPush(self, piece, pos2):
-        pos1 = piece.position 
+        pos1 = piece.position
         if (pos1[0] == 7 and piece.team == 0) or (pos1[0] == 1 and piece.team == 1):
             return abs(pos1[0]-pos2[0])<3
         return abs(pos1[0]-pos2[0])<2
@@ -225,6 +239,18 @@ class Board():
          if piece.team != self.player:
               return False
          if pos in piece.possibleMoves.keys():
+              if piece.id == 6:
+                   if abs(pos[0]-piece.position[0])==2:
+                        piece.enpassant = True
+                   else:
+                        piece.enpassant = False
+              if piece.id == 6 and pos[1] != piece.position[1] and self.board[pos[0]][pos[1]] is None:
+                   # black é 1
+                   mover = -1 if piece.team else 1
+                   if self.board[pos[0]+mover][pos[1]].id == 6:
+                        if self.board[pos[0]+mover][pos[1]].enpassant:
+                             self.board[pos[0]+mover][pos[1]] = None
+                        
               self.board[pos[0]][pos[1]] = piece
               self.board[piece.position[0]][piece.position[1]] = None
               piece.position = (pos[0],pos[1])
@@ -277,6 +303,7 @@ class Knight():
     
 class Pawn():
     def __init__(self, board: Board, position: tuple, team:int):
+        self.enpassant = False
         self.id = 6
         self.value = 1
         self.gameEnviroment = board
@@ -288,6 +315,7 @@ class Pawn():
         self.possibleMoves.clear()
         for move in self.gameEnviroment.getPush(self.position, self.team):
              self.possibleMoves[move] = 1
+             
     
 class King():
     def __init__(self, board: Board, position: tuple, team:int):
