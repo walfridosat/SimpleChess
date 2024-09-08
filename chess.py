@@ -259,88 +259,78 @@ class Board():
               return True
          return False
 
-class Queen():
-    def __init__(self, board: Board, position: tuple, team:int):
-        self.id = 2
-        self.value = 8
-        self.gameEnviroment = board
+class Piece:
+    def __init__(self, board: 'Board', position: tuple, team: int, piece_id: int, value: int):
+        self.board = board
         self.position = position
         self.team = team
+        self.id = piece_id
+        self.value = value
         self.possibleMoves = {}
+
     def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getDiagonals(self.position, self.team) + self.gameEnviroment.getSides(self.position, self.team):
-             self.possibleMoves[move] = 1
+        raise NotImplementedError("This method should be overridden by subclasses")
     
-class Rook():
-    def __init__(self, board: Board, position: tuple, team:int):
-        self.id = 5
-        self.value = 5
-        self.gameEnviroment = board
-        self.position = position
-        self.team = team
-        self.possibleMoves = {}
+    def clearMoves(self):
+        self.possibleMoves.clear()
+
+
+class Queen(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 2, 8)
 
     def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getSides(self.position, self.team):
-             self.possibleMoves[move] = 1
+        self.clearMoves()
+        for move in self.board.getDiagonals(self.position, self.team) + self.board.getSides(self.position, self.team):
+            self.possibleMoves[move] = 1
 
-class Knight():    
-    def __init__(self, board: Board, position: tuple, team:int):
-        self.id = 4
-        self.value = 3
-        self.gameEnviroment = board
-        self.position = position
-        self.team = team
-        self.possibleMoves = {}
+
+class Rook(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 5, 5)
 
     def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getLeaps(self.position, self.team):
-             self.possibleMoves[move] = 1
-        
-    
-class Pawn():
-    def __init__(self, board: Board, position: tuple, team:int):
+        self.clearMoves()
+        for move in self.board.getSides(self.position, self.team):
+            self.possibleMoves[move] = 1
+
+
+class Knight(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 4, 3)
+
+    def generateMoves(self):
+        self.clearMoves()
+        for move in self.board.getLeaps(self.position, self.team):
+            self.possibleMoves[move] = 1
+
+
+class Bishop(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 3, 3)
+
+    def generateMoves(self):
+        self.clearMoves()
+        for move in self.board.getDiagonals(self.position, self.team):
+            self.possibleMoves[move] = 1
+
+
+class Pawn(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 6, 1)
         self.enpassant = False
-        self.id = 6
-        self.value = 1
-        self.gameEnviroment = board
-        self.position = position
-        self.team = team
-        self.possibleMoves = {}
 
     def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getPush(self.position, self.team):
-             self.possibleMoves[move] = 1
-             
-    
-class King():
-    def __init__(self, board: Board, position: tuple, team:int):
-        self.id = 1
-        self.value = 1
-        self.gameEnviroment = board
-        self.position = position
-        self.team = team
-        self.possibleMoves = {}
+        self.clearMoves()
+        for move in self.board.getPush(self.position, self.team):
+            self.possibleMoves[move] = 1
+
+
+class King(Piece):
+    def __init__(self, board, position, team):
+        super().__init__(board, position, team, 1, 1)
 
     def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getKing(self.position, self.team):
-             self.possibleMoves[move] = 1
-
-class Bishop():
-    def __init__(self, board: Board, position: tuple, team:int):
-        self.id = 3
-        self.value = 3
-        self.gameEnviroment = board
-        self.position = position
-        self.team = team
-        self.possibleMoves = {}
-
-    def generateMoves(self):
-        self.possibleMoves.clear()
-        for move in self.gameEnviroment.getDiagonals(self.position, self.team):
-             self.possibleMoves[move] = 1
+        self.clearMoves()
+        for move in self.board.getKing(self.position, self.team):
+            self.possibleMoves[move] = 1
