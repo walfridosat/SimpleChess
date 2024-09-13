@@ -4,7 +4,7 @@ Very inefficient chess game (will be a bot soon) ported to webassembly via pygba
 
 Heavily inspired by [Sebastian Lague's video of coding adverntures!](https://www.youtube.com/watch?v=U4ogK0MIzqk)
 
-You can play it online at [my personal website](https://www.cin.ufpe.br/~wsn/) (altough i dont garantee it'll be up to date lol)
+You can play it online at [my personal website](https://www.cin.ufpe.br/~wsn/chess) (altough i dont garantee it'll be up to date lol)
 
 # Usage steps:
 
